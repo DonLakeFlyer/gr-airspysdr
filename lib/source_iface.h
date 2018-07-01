@@ -201,6 +201,10 @@ public:
    */
   virtual double set_bb_gain( double gain, size_t chan = 0 ) { return 0; }
 
+  virtual double set_vga_gain( double gain, size_t chan = 0 ) { return 0; }
+  virtual double set_lna_gain( double gain, size_t chan = 0 ) { return 0; }
+  virtual double set_mixer_gain( double gain, size_t chan = 0 ) { return 0; }
+
   /*!
    * Get the available antennas of the underlying radio hardware.
    * \param chan the channel index 0 to N-1

@@ -109,9 +109,11 @@ public:
   double get_gain( size_t chan = 0 );
   double get_gain( const std::string & name, size_t chan = 0 );
 
+  double set_if_gain( double gain, size_t chan = 0 );
+
   double set_lna_gain( double gain, size_t chan = 0 );
   double set_mix_gain(double gain, size_t chan = 0 );
-  double set_if_gain( double gain, size_t chan = 0 );
+  double set_vga_gain( double gain, size_t chan = 0 );
 
   std::vector< std::string > get_antennas( size_t chan = 0 );
   std::string set_antenna( const std::string & antenna, size_t chan = 0 );
@@ -139,6 +141,7 @@ private:
   double _gain;
   enum gain_policy
   {
+      manual,
       linearity,
       sensitivity
   };

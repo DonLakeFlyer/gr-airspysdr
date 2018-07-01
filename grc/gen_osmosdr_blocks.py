@@ -54,9 +54,9 @@ self.\$(id).set_dc_offset_mode(\$dc_offset_mode$(n), $n)
 self.\$(id).set_iq_balance_mode(\$iq_balance_mode$(n), $n)
 self.\$(id).set_gain_mode(\$gain_mode$(n), $n)
 #end if
-self.\$(id).set_gain(\$gain$(n), $n)
-self.\$(id).set_if_gain(\$if_gain$(n), $n)
-self.\$(id).set_bb_gain(\$bb_gain$(n), $n)
+self.\$(id).set_vga_gain(\$vga_gain$(n), $n)
+self.\$(id).set_mixer_gain(\$mixer_gain$(n), $n)
+self.\$(id).set_lna_gain(\$lna_gain$(n), $n)
 self.\$(id).set_antenna(\$ant$(n), $n)
 self.\$(id).set_bandwidth(\$bw$(n), $n)
 \#end if
@@ -71,9 +71,9 @@ self.\$(id).set_bandwidth(\$bw$(n), $n)
   <callback>set_iq_balance_mode(\$iq_balance_mode$(n), $n)</callback>
   <callback>set_gain_mode(\$gain_mode$(n), $n)</callback>
   #end if
-  <callback>set_gain(\$gain$(n), $n)</callback>
-  <callback>set_if_gain(\$if_gain$(n), $n)</callback>
-  <callback>set_bb_gain(\$bb_gain$(n), $n)</callback>
+  <callback>set_vga_gain(\$vga_gain$(n), $n)</callback>
+  <callback>set_mixer_gain(\$mixer_gain$(n), $n)</callback>
+  <callback>set_lna_gain(\$lna_gain$(n), $n)</callback>
   <callback>set_antenna(\$ant$(n), $n)</callback>
   <callback>set_bandwidth(\$bw$(n), $n)</callback>
   #end for
@@ -402,22 +402,22 @@ PARAMS_TMPL = """
   </param>
 #end if
   <param>
-    <name>Ch$(n): RF Gain (dB)</name>
-    <key>gain$(n)</key>
+    <name>Ch$(n): VGA Gain (dB)</name>
+    <key>vga_gain$(n)</key>
     <value>10</value>
     <type>real</type>
     <hide>\#if \$nchan() > $n then 'none' else 'all'#</hide>
   </param>
   <param>
-    <name>Ch$(n): IF Gain (dB)</name>
-    <key>if_gain$(n)</key>
+    <name>Ch$(n): Mixer Gain (dB)</name>
+    <key>mixer_gain$(n)</key>
     <value>20</value>
     <type>real</type>
     <hide>\#if \$nchan() > $n then 'none' else 'all'#</hide>
   </param>
   <param>
-    <name>Ch$(n): BB Gain (dB)</name>
-    <key>bb_gain$(n)</key>
+    <name>Ch$(n): LNA Gain (dB)</name>
+    <key>lna_gain$(n)</key>
     <value>20</value>
     <type>real</type>
     <hide>\#if \$nchan() > $n then 'none' else 'all'#</hide>

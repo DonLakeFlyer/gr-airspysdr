@@ -211,6 +211,10 @@ public:
    */
   virtual double set_if_gain( double gain, size_t chan = 0 ) = 0;
 
+  virtual double set_vga_gain( double gain, size_t chan = 0 ) = 0;
+  virtual double set_lna_gain( double gain, size_t chan = 0 ) = 0;
+  virtual double set_mixer_gain( double gain, size_t chan = 0 ) = 0;
+
   /*!
    * Set the BB gain for the underlying radio hardware.
    * This function will automatically distribute the desired gain value over

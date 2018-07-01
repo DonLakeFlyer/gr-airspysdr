@@ -712,6 +712,51 @@ double source_impl::set_if_gain( double gain, size_t chan )
   return 0;
 }
 
+double source_impl::set_vga_gain( double gain, size_t chan )
+{
+  size_t channel = 0;
+  BOOST_FOREACH( source_iface *dev, _devs )
+    for (size_t dev_chan = 0; dev_chan < dev->get_num_channels(); dev_chan++)
+      if ( chan == channel++ ) {
+        if ( _vga_gain[ chan ] != gain ) {
+          _vga_gain[ chan ] = gain;
+          return dev->set_vga_gain( gain, dev_chan );
+        } else { return _vga_gain[ chan ]; }
+      }
+
+  return 0;
+}
+
+double source_impl::set_mixer_gain( double gain, size_t chan )
+{
+  size_t channel = 0;
+  BOOST_FOREACH( source_iface *dev, _devs )
+    for (size_t dev_chan = 0; dev_chan < dev->get_num_channels(); dev_chan++)
+      if ( chan == channel++ ) {
+        if ( _mixer_gain[ chan ] != gain ) {
+          _mixer_gain[ chan ] = gain;
+          return dev->set_mixer_gain( gain, dev_chan );
+        } else { return _mixer_gain[ chan ]; }
+      }
+
+  return 0;
+}
+
+double source_impl::set_lna_gain( double gain, size_t chan )
+{
+  size_t channel = 0;
+  BOOST_FOREACH( source_iface *dev, _devs )
+    for (size_t dev_chan = 0; dev_chan < dev->get_num_channels(); dev_chan++)
+      if ( chan == channel++ ) {
+        if ( _lna_gain[ chan ] != gain ) {
+          _lna_gain[ chan ] = gain;
+          return dev->set_lna_gain( gain, dev_chan );
+        } else { return _lna_gain[ chan ]; }
+      }
+
+  return 0;
+}
+
 double source_impl::set_bb_gain( double gain, size_t chan )
 {
   size_t channel = 0;

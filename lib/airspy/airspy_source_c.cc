@@ -90,7 +90,7 @@ airspy_source_c::airspy_source_c (const std::string &args)
     _center_freq(0),
     _freq_corr(0),
     _auto_gain(false),
-    _gain_policy(linearity),
+    _gain_policy(manual),
     _lna_gain(0),
     _mix_gain(0),
     _vga_gain(0),
@@ -145,6 +145,9 @@ airspy_source_c::airspy_source_c (const std::string &args)
 
   if ( dict.count( "sensitivity" ) )
     _gain_policy = sensitivity;
+
+  if ( dict.count( "manual" ) )
+    _gain_policy = manual;
 
   set_lna_gain( 8 ); /* preset to a reasonable default (non-GRC use case) */
 
@@ -524,6 +527,13 @@ double airspy_source_c::set_gain( double gain, size_t chan )
         } else {
           AIRSPY_THROW_ON_ERROR( ret, AIRSPY_FUNC_STR( "airspy_set_sensitivity_gain", value ) )
         }
+    } else if ( _gain_policy == manual ) {
+        ret = airspy_set_vga_gain( _dev, value );
+        if ( AIRSPY_SUCCESS == ret ) {
+          _gain = clip_gain;
+        } else {
+          AIRSPY_THROW_ON_ERROR( ret, AIRSPY_FUNC_STR( "airspy_set_sensitivity_gain", value ) )
+        }
     }
   }
 
@@ -567,6 +577,26 @@ double airspy_source_c::get_gain( const std::string & name, size_t chan )
   }
 
   return get_gain( chan );
+}
+
+double airspy_source_c::set_vga_gain( double gain, size_t chan )
+{
+  int ret = AIRSPY_SUCCESS;
+  osmosdr::gain_range_t gains = get_gain_range( "IF", chan );
+
+  if (_dev) {
+    double clip_gain = gains.clip( gain, true );
+    uint8_t value = clip_gain;
+
+    ret = airspy_set_vga_gain( _dev, value );
+    if ( AIRSPY_SUCCESS == ret ) {
+      _vga_gain = clip_gain;
+    } else {
+      AIRSPY_THROW_ON_ERROR( ret, AIRSPY_FUNC_STR( "airspy_set_vga_gain", value ) )
+    }
+  }
+
+  return _vga_gain;
 }
 
 double airspy_source_c::set_lna_gain( double gain, size_t chan )
