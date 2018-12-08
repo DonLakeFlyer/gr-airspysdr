@@ -90,7 +90,7 @@ airspy_source_c::airspy_source_c (const std::string &args)
     _center_freq(0),
     _freq_corr(0),
     _auto_gain(false),
-    _gain_policy(manual),
+    _gain_policy(sensitivity),
     _lna_gain(0),
     _mix_gain(0),
     _vga_gain(0),
